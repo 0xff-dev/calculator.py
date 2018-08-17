@@ -20,6 +20,7 @@ class Calculator(QWidget):
 
         self.empty_flag = True
         self.after_operator = False
+        self.express = ''
         self.char_top = ''
         self.num_top = 0
         self.res = 0
@@ -101,18 +102,20 @@ class Calculator(QWidget):
             # 就是需要上一次的计算结果
             self.num_stack.append(self.res)
             self.char_stack.append(sender_text)
+            self.express += (str(self.res)+sender_text)
         else:
             self.num_top = float(_str) if _str.count('.') != 0 \
                                             else int(_str)
             
             self.char_top = sender_text
+            self.num_stack.append(self.num_top)
             num_stack_len, char_stack_len = len(self.num_stack), len(self.char_stack)
-            if (num_stack_len == char_stack_len) and num_stack_len != 0:
+            if (num_stack_len != 0) and (num_stack_len == char_stack_len):
                 #在这里处理类似 输入 1+- 这种情况就是 1-后一个字符替换前面的
-                self.char_stack[-1] = sender_text
+                self.char_stack = self.char_stack[:]
+                self.num_stack = self.num_stack[:-1]
             else:
                 # 1+2*..... 类似输入
-                self.num_stack.append(self.num_top)
                 if len(self.char_stack) == 0:
                     self.char_stack.append(self.char_top)
                 else:
