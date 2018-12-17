@@ -46,7 +46,7 @@ class Calculator(QWidget):
         self.setLayout(grid)
 
         btn_names = [
-            'C', '草', '%', '/',
+            'C', 'None', '%', '/',
             '7', '8', '9', '*',
             '4', '5', '6', '-',
             '1', '2', '3', '+',
